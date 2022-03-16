@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { useEffect, useState } from 'react';
 
@@ -26,11 +26,7 @@ function App() {
     <div className="App">
         <Counter/>
         <ExternalUsers/>
-
-
-
-
-
+        <LoadComments1/>
 
        <h1>The number is {number}</h1>
        {
@@ -85,8 +81,6 @@ function User(props){
   )
 }
 
-
-
 function Counter(){
   // const abc = useState(0);
     // console.log(abc)
@@ -113,9 +107,6 @@ function Counter(){
  )
 }
 
-
-
-
 function Person(props){
   console.log(props)
   return (
@@ -123,6 +114,31 @@ function Person(props){
       <h1>{props.name}</h1>
       <p>{props.nayika}</p>
   </div>
+  )
+}
+
+function LoadComments1(){
+  const [comments, setComments] = useState([]);
+  useEffect( () => {
+    fetch('https://jsonplaceholder.typicode.com/comments')
+    .then(res => res.json())
+    // .then(data =>console.log(data))
+    .then(data =>setComments(data))
+  },[])
+  return(
+    <div>
+        <h2>{comments.length}</h2>
+        {comments.slice(0,4).map(comment => <Comment1 email={comment.email} body = {comment.body}></Comment1> )}
+    </div>
+  )
+}
+
+function Comment1(props){
+  return(
+    <div  style = {{border: '4px solid green' , margin: '30px', width: '50%'}}>
+      <h3>email: {props.email}</h3>
+      <p>{props.body}</p>
+    </div>
   )
 }
 
